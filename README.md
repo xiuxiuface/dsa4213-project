@@ -36,7 +36,7 @@ This project investigates how **LLMs** (Large Language Models) with different se
 
 ---
 
-## ⚙️ Methods & Models
+## Methods & Models
 
 ### 1️⃣ Zero-shot Baseline
 - Model: **FLAN-T5 (Generative)**
