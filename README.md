@@ -23,8 +23,8 @@ This project investigates how **LLMs** (Large Language Models) with different se
 
 ## Dataset
 
-**Primary Source:** [MedQuAD Dataset](https://catalog.data.gov/dataset/medquad-medical-question-answer-dataset)  
-- ~47,000 QA pairs from 12 NIH/NLM medical websites  
+**Primary Source:** [PubMedQA Dataset](https://huggingface.co/datasets/qiaojin/PubMedQA)  
+- ~211,000 QA pairs from 12 NIH/NLM medical websites  
 - Filtered for **diabetes-related** questions and answers  
 - Cleaned and preprocessed for training and retrieval  
 
@@ -38,17 +38,17 @@ This project investigates how **LLMs** (Large Language Models) with different se
 
 ## Methods & Models
 
-### 1️⃣ Zero-shot Baseline
+### 1. Zero-shot Baseline
 - Model: **FLAN-T5 (Generative)**
 - Task: QA and summarisation without retrieval or fine-tuning  
 - Evaluates LLM’s inherent understanding of diabetes-related queries  
 
-### 2️⃣ Fine-tuned Models
+### 2. Fine-tuned Models
 - Models: **BioBERT (QA)**, **FLAN-T5 (Summarisation)**
 - Dataset: Diabetes subset of MedQuAD  
 - Evaluates how fine-tuning improves task-specific accuracy and readability  
 
-### 3️⃣ Retrieval-Augmented Generation (RAG)
+### 3. Retrieval-Augmented Generation (RAG)
 - Retriever: **BM25** (sparse) and **FAISS** (dense, BioBERT embeddings)  
 - Generator: **FLAN-T5**  
 - Input: Question + top-*k* retrieved passages (*k* = 1, 3, 5)  
