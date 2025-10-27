@@ -61,7 +61,7 @@ This project investigates how **LLMs** (Large Language Models) with different se
 | Task | Metrics |
 |------|----------|
 | QA | Exact Match (EM), F1 Score |
-| Summarisation | ROUGE-L, BERTScore |
+| Summarisation | ROUGE-1, ROUGE-2, ROUGE-L, BERTScore |
 | Retrieval (RAG only) | Precision@k, Recall@k |
 | Readability | Flesch-Kincaid Readability Score |
 | Human Evaluation | Factuality and Clarity (5–10 samples) |
