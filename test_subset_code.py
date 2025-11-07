@@ -1,7 +1,4 @@
-"""
-Test Subset Code - Quick Testing with Small Sample
-使用小样本快速测试代码是否正常运行
-"""
+
 from RAG_Summarization_Complete import (
     BM25Retriever,
     FAISSRetriever,
@@ -12,7 +9,26 @@ from RAG_Summarization_Complete import (
     load_data,
     prepare_corpus
 )
+import pandas as pd
+import numpy as np
+from tqdm import tqdm
+import json
+import os
+from typing import List, Dict, Tuple
 
+# Retrieval libraries
+from rank_bm25 import BM25Okapi
+from sentence_transformers import SentenceTransformer
+import faiss
+
+# Generation
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import torch
+
+# Evaluation
+from rouge_score import rouge_scorer
+from bert_score import score as bert_score
+import textstat
 # ============================================================================
 # QUICK TEST WITH SUBSET
 # ============================================================================
@@ -30,7 +46,7 @@ def quick_test(sample_size: int = 50):
     
     # 1. Load data
     print("\n[1/5] Loading data...")
-    df = load_data("rag_dataset.xlsx")
+    df = load_data("rag_dataset (3).xlsx")
     
     # 2. Sample subset
     print(f"\n[2/5] Sampling {sample_size} questions...")
@@ -100,20 +116,22 @@ def quick_test(sample_size: int = 50):
         print(f"    Avg FK: {metrics['Avg_FK_Grade']:.2f}")
     
     # Save test results
-    os.makedirs("test_results", exist_ok=True)
     
     results_df = pd.DataFrame(results)
-    results_df.to_csv("test_results/quick_test_results.csv", index=False)
+    # results_df.to_csv("quick_test_results.csv", index=False)
+    results_dict = results_df.to_dict(orient='records')
+    with open("quick_test_metrics.json", "w") as f:
+        json.dump(results_dict, f, indent=2)
     
-    test_df['rag_summary_bm25'] = [pipeline.run(q) for q in test_df['question'][:10]]
-    test_df.to_csv("test_results/test_sample_outputs.csv", index=False)
+    # test_df['rag_summary_bm25'] = [pipeline.run(q) for q in test_df['question'][:10]]
+    test_df.to_csv("test_sample_outputs.csv", index=False)
     
     print("\n" + "="*80)
     print("✓ QUICK TEST COMPLETED")
     print("="*80)
     print("\nResults:")
     print(results_df.to_string())
-    print(f"\nSaved to: test_results/")
+
     
     return results_df
 
@@ -149,27 +167,27 @@ def inspect_examples(n: int = 3):
         print(f"EXAMPLE {i}/{n}")
         print(f"{'='*80}")
         
-        print(f"\n📝 Question:\n{row['question']}")
-        print(f"\n✅ True Answer:\n{row['answer']}")
+        print(f"\n Question:\n{row['question']}")
+        print(f"\n True Answer:\n{row['answer']}")
         
         # BM25
-        print(f"\n🔍 BM25 Retrieved Context (top-3):")
+        print(f"\n BM25 Retrieved Context (top-3):")
         bm25_ctx = bm25.retrieve(row['question'], k=3)
         for j, doc in enumerate(bm25_ctx, 1):
             print(f"  [{j}] {doc[:200]}...")
         
         bm25_summary = summarizer.generate(row['question'], bm25_ctx)
-        print(f"\n🤖 BM25 RAG Summary:\n{bm25_summary}")
+        print(f"\n BM25 RAG Summary:\n{bm25_summary}")
         print(f"   FK Grade: {textstat.flesch_kincaid_grade(bm25_summary):.2f}")
         
         # FAISS
-        print(f"\n🔍 FAISS Retrieved Context (top-3):")
+        print(f"\n FAISS Retrieved Context (top-3):")
         faiss_ctx = faiss.retrieve(row['question'], k=3)
         for j, doc in enumerate(faiss_ctx, 1):
             print(f"  [{j}] {doc[:200]}...")
         
         faiss_summary = summarizer.generate(row['question'], faiss_ctx)
-        print(f"\n🤖 FAISS RAG Summary:\n{faiss_summary}")
+        print(f"\n FAISS RAG Summary:\n{faiss_summary}")
         print(f"   FK Grade: {textstat.flesch_kincaid_grade(faiss_summary):.2f}")
 
 # ============================================================================
@@ -186,4 +204,4 @@ if __name__ == "__main__":
         # Quick test mode: python test_subset_code.py
         quick_test(sample_size=50)
     
-    print("\n✨ Done!")
+    print("\n Done!")
