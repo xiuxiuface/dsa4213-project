@@ -1,0 +1,33 @@
+{
+  "evaluation_results": {
+    "Dense_k1": {
+      "EM": 0.8417528024457709,
+      "Token_F1": 0.8417528024457709,
+      "Avg_Answer_Length": 1.0
+    },
+    "Dense_k3": {
+      "EM": 0.7768234095210366,
+      "Token_F1": 0.7768234095210366,
+      "Avg_Answer_Length": 1.0
+    },
+    "Dense_k5": {
+      "EM": 0.7768234095210366,
+      "Token_F1": 0.7768234095210366,
+      "Avg_Answer_Length": 1.0
+    }
+  },
+  "retrieval_metrics": {
+    "Dense_k1": {
+      "Precision@1": 0.8598777114572718,
+      "Recall@1": 0.8598777114572718
+    },
+    "Dense_k3": {
+      "Precision@3": 0.3151113699228418,
+      "Recall@3": 0.9453341097685253
+    },
+    "Dense_k5": {
+      "Precision@5": 0.19293929247343136,
+      "Recall@5": 0.9646964623671568
+    }
+  }
+}
