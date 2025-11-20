@@ -1,21 +1,18 @@
-# dsa4213-project
+# DSA4213 Final Project: Assessing Model Adaptation Strategies for Biomedical Text Simplification: A Case Study on Diabetes
 
-This repository contains all code, datasets, and results for our **DSA4213: Natural Language Processing for Data Science** group project.  
-Our goal is to evaluate how **Retrieval-Augmented Generation (RAG)** improves **question answering (QA)** and **summarisation** of diabetes-related medical content, compared against **zero-shot** and **fine-tuned** baselines.
-
+This repository contains all code, datasets, and results for our DSA4213: Natural Language Processing for Data Science group project:
+**A comparative evaluation of Zero-Shot prompting, Fine-Tuning, and Retrieval-Augmented Generation (RAG) for biomedical QA and summarisation**, focusing on diabetes-related content from PubMedQA.
 ---
 
 ## Motivation
-
 Access to accurate, understandable medical information is essential for public health. However, medical texts are often full of jargon and misinformation.  
 This project investigates how **LLMs** (Large Language Models) with different setups—zero-shot, fine-tuned, and retrieval-augmented—can improve clarity, factuality, and accessibility in diabetes-related Q&A and summarisation tasks.
 
 ---
 
 ## Objectives
-
 - Compare **Zero-shot**, **Fine-tuned**, and **RAG** approaches for diabetes Q&A and summarisation.  
-- Evaluate the effect of **retrieval augmentation** (BM25, FAISS) and **prompting styles**.  
+- Evaluate the effect of **retrieval augmentation** and **prompting styles**.  
 - Quantitatively assess model performance using **QA**, **summarisation**, and **readability metrics**.  
 - Conduct **ablation studies** and **qualitative analysis** for factuality and readability.
 
@@ -24,7 +21,7 @@ This project investigates how **LLMs** (Large Language Models) with different se
 ## Dataset
 
 **Primary Source:** [PubMedQA Dataset](https://huggingface.co/datasets/qiaojin/PubMedQA)  
-- ~211,000 QA pairs from 12 NIH/NLM medical websites  
+- ~211,000 QA pairs from PubMed Articles  
 - Filtered for **diabetes-related** questions and answers  
 - Cleaned and preprocessed for training and retrieval  
 
@@ -49,7 +46,7 @@ This project investigates how **LLMs** (Large Language Models) with different se
 - Evaluates how fine-tuning improves task-specific accuracy and readability  
 
 ### 3. Retrieval-Augmented Generation (RAG)
-- Retriever: **BM25** (sparse) and **FAISS** (dense, BioBERT embeddings)  
+- Retriever: **FAISS** (dense, BioBERT embeddings)  
 - Generator: **FLAN-T5**  
 - Input: Question + top-*k* retrieved passages (*k* = 1, 3, 5)  
 - Evaluates how retrieval improves factual grounding and answer quality  
@@ -62,9 +59,6 @@ This project investigates how **LLMs** (Large Language Models) with different se
 |------|----------|
 | QA | Exact Match (EM), F1 Score |
 | Summarisation | ROUGE-1, ROUGE-2, ROUGE-L, BERTScore |
-| Retrieval (RAG only) | Precision@k, Recall@k |
 | Readability | Flesch-Kincaid Readability Score |
-| Human Evaluation | Factuality and Clarity (5–10 samples) |
-
 ---
 
