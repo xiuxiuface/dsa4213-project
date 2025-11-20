@@ -29,10 +29,10 @@ for diabetes-related QA and summarisation tasks.
 ## Dataset
 
 ### **Source**
-- PubMedQA (HuggingFace Dataset)
+- [PubMedQA Dataset](https://huggingface.co/datasets/qiaojin/PubMedQA) — a biomedical QA dataset derived from PubMed abstracts with 211.3k QA pairs
 
 ### **Filtering & Processing**
-- Extracted diabetes-related samples using **MeSH labels**.  
+- Extracted **diabetes-related** samples using **MeSH labels**.  
 - Cleaned, deduplicated, and standardised biomedical text.  
 
 ### **Final Datasets**
