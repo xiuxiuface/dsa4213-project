@@ -1,64 +1,96 @@
-# DSA4213 Final Project: Assessing Model Adaptation Strategies for Biomedical Text Simplification: A Case Study on Diabetes
+# DSA4213 Final Project  
+## Assessing Model Adaptation Strategies for Biomedical Text Simplification: A Case Study on Diabetes
 
-This repository contains all code, datasets, and results for our DSA4213: Natural Language Processing for Data Science group project:
-**A comparative evaluation of Zero-Shot prompting, Fine-Tuning, and Retrieval-Augmented Generation (RAG) for biomedical QA and summarisation**, focusing on diabetes-related content from PubMedQA.
+This repository contains the code, datasets, and results for our DSA4213: Natural Language Processing for Data Science project.  
+We compare **Zero-Shot prompting**, **Fine-Tuning**, and **Retrieval-Augmented Generation (RAG)** for biomedical question answering (QA) and summarisation, using **diabetes-related content** from PubMedQA.
+
 ---
 
-## Motivation
-Access to accurate, understandable medical information is essential for public health. However, medical texts are often full of jargon and misinformation.  
-This project investigates how **LLMs** (Large Language Models) with different setups—zero-shot, fine-tuned, and retrieval-augmented—can improve clarity, factuality, and accessibility in diabetes-related Q&A and summarisation tasks.
+## Motivation  
+Access to reliable medical information is essential for public health, yet biomedical literature is often difficult for non-experts to understand.  
+This project investigates how different **LLM adaptation strategies** (zero-shot, fine-tuned, retrieval-augmented) can improve:
+
+- clarity and readability  
+- factual accuracy  
+- biomedical grounding  
+
+for diabetes-related QA and summarisation tasks.
 
 ---
 
 ## Objectives
-- Compare **Zero-shot**, **Fine-tuned**, and **RAG** approaches for diabetes Q&A and summarisation.  
-- Evaluate the effect of **retrieval augmentation** and **prompting styles**.  
-- Quantitatively assess model performance using **QA**, **summarisation**, and **readability metrics**.  
-- Conduct **ablation studies** and **qualitative analysis** for factuality and readability.
+- Compare **Zero-Shot**, **Fine-Tuned**, and **RAG** model setups.  
+- Evaluate how **prompting**, **fine-tuning**, and **retrieval** affect performance.  
+- Assess models using **QA accuracy**, **summarisation metrics**, and **readability scores**.  
+- Perform **ablation studies** and **qualitative error analysis**.
 
 ---
 
 ## Dataset
 
-**Primary Source:** [PubMedQA Dataset](https://huggingface.co/datasets/qiaojin/PubMedQA)  
-- ~211,000 QA pairs from PubMed Articles  
-- Filtered for **diabetes-related** questions and answers  
-- Cleaned and preprocessed for training and retrieval  
+### **Source**
+- PubMedQA (HuggingFace Dataset)
 
+### **Filtering & Processing**
+- Extracted diabetes-related samples using **MeSH labels**.  
+- Cleaned, deduplicated, and standardised biomedical text.  
+
+### **Final Datasets**
+- **QA Dataset** (`qa_dataset.xlsx`)  
+  Biomedical questions, abstract snippets, short answers, Yes/No labels.  
+- **Summarisation Dataset** (`summrization_dataset.xlsx`)  
+  Full abstracts paired with simplified summaries.  
+- **RAG Passage Dataset** (`rag_dataset.xlsx`)  
+  Abstracts segmented into 3-sentence chunks for dense retrieval.
+
+### **Data Split**
 | Split | Purpose | Percentage |
 |--------|----------|------------|
-| Train | Fine-tuning models | 70% |
-| Validation | Model evaluation | 15% |
-| Test | Final comparison | 15% |
+| Train | Model fine-tuning | **70%** |
+| Validation | Hyperparameter tuning | **15%** |
+| Test | Final comparison | **15%** |
 
 ---
 
-## Methods & Models
+## Methods & Notebooks
 
-### 1. Zero-shot Baseline
-- Model: **FLAN-T5 (Generative)**
-- Task: QA and summarisation without retrieval or fine-tuning  
-- Evaluates LLM’s inherent understanding of diabetes-related queries  
+All experiments were conducted via Jupyter notebooks.
 
-### 2. Fine-tuned Models
-- Models: **BioBERT (QA)**, **FLAN-T5 (Summarisation)**
-- Dataset: Diabetes subset of MedQuAD  
-- Evaluates how fine-tuning improves task-specific accuracy and readability  
+### **1. Data Preparation**  
+- `PubMedQA_Preprocessing.ipynb`
 
-### 3. Retrieval-Augmented Generation (RAG)
-- Retriever: **FAISS** (dense, BioBERT embeddings)  
-- Generator: **FLAN-T5**  
-- Input: Question + top-*k* retrieved passages (*k* = 1, 3, 5)  
-- Evaluates how retrieval improves factual grounding and answer quality  
+### **2. Zero-Shot Prompting (FLAN-T5)**  
+- `Zero_Shot_with_FLAN_T5.ipynb`
+
+### **3. Fine-Tuning BioBERT for QA**  
+- `finetuned_BioBERT.ipynb`
+
+### **4. Fine-Tuning FLAN-T5 for Summarisation**  
+- `finetuned_flant5.ipynb`
+
+### **5. RAG for QA**  
+- `rag-qa-final-new.ipynb`
+
+### **6. RAG for Summarisation**  
+- `rag-sum-full-new.ipynb`
+
+### **7. Evaluation & Visualisation**  
+- `Evaluation_Plots.ipynb`  
+- `plot.py`
 
 ---
 
 ## Evaluation Metrics
 
 | Task | Metrics |
-|------|----------|
-| QA | Exact Match (EM), F1 Score |
-| Summarisation | ROUGE-1, ROUGE-2, ROUGE-L, BERTScore |
-| Readability | Flesch-Kincaid Readability Score |
+|------|---------|
+| **QA** | Exact Match (EM), F1 Score |
+| **Summarisation** | ROUGE-1, ROUGE-2, ROUGE-L, BERTScore |
+| **Readability** | Flesch-Kincaid Readability Score |
+
 ---
+
+## Summary  
+This work benchmarks three major LLM adaptation strategies for biomedical tasks and highlights the trade-offs between **accuracy**, **readability**, and **evidence grounding**.  
+All results, generated outputs, and plots are included in this repository.
 
